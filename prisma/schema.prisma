@@ -7,8 +7,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  shadowDatabaseUrl= env("SHADDOW_DATABASE_URL")
+  url      = "postgres://enkiikacqihgbn:8a3c98f96d8e1aa4e650674fef8bd668bc749d827f89c64abcba43d1d851be41@ec2-3-225-213-67.compute-1.amazonaws.com:5432/d74eak3uud78ee"
+  shadowDatabaseUrl= "postgres://tvztvpoqdujgrr:96cdf0055e685bf874b98a3866b501c6a45d1657baf1002c32ab486b0417cd4b@ec2-3-225-213-67.compute-1.amazonaws.com:5432/dd2j6fen5of7kg"
 }
 
 model User {
@@ -17,4 +17,20 @@ model User {
   updatedAt DateTime @updatedAt
   email String @unique
   password String
+}
+
+model Song {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String
+  artist Artist @relation(fields: [artistId], references: [id])
+  artistId Int
+}
+
+model Artist {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  song Song[]
 }
